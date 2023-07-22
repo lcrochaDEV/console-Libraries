@@ -2,7 +2,7 @@
 
 /**************************LUCAS ROCHA****************************/
 /*
- * Portas ANalogicas A = 1,2,3,4,5,6,7.
+ * Portas Analogicas A = 1,2,3,4,5,6,7.
  * Portas Analogicas/Digitais 14, 15, 16, 17, 18, 19, 20.
  * Portas Digitais D = 2,3,4,5PWM,6PWM,7,8,9PWM,10PWM,11PWM,12,13.
  *
@@ -13,7 +13,7 @@ template< typename T, size_t N > size_t ArraySize (T (&) [N]){
   return N; 
 }
 String promptCLI; //NOME DO MODULO
-String pinType[] = {"A1", "D2", "D13"};
+String pinType[30] = {"D13"};
 String bufferArray[3]; // =>  activePin, estado}
 
 int pin_On = HIGH; //PIN STATE ALTO = 1
@@ -47,32 +47,47 @@ void Console::consoleView(){
 }
 void Console::pinTypeExiste(String _consoleTextView){
   while(contagem < ArraySize(pinType)) {
-    if(_consoleTextView == pinType[contagem]){ //VERIFICA SE EXISTE NO ARRAY
+    if(_consoleTextView != pinType[contagem]){ //VERIFICA SE EXISTE NO ARRAY
       if (_consoleTextView.indexOf("A") == 0 && _consoleTextView.length() == 2 || _consoleTextView.indexOf("D") == 0 && _consoleTextView.length() <= 3) {
         bufferArray[0] = _consoleTextView; //OBRIGATÓRIO
         messageView(promptCLI + "-" + _consoleTextView + ">");
       break;
+      }else if(_consoleTextView == "LISTPIN"){
+        mostraPinos();
+      break;
+      }else if(_consoleTextView == "INPUT" || _consoleTextView == "OUTPUT" || _consoleTextView == "OUTPUT"){
+        pin_mode(_consoleTextView);
+      break;
+      }else if(_consoleTextView == "ON" || _consoleTextView == "OFF"){;
+        pinOnOff(_consoleTextView);
+      break;
+      }else if(_consoleTextView == "END"){
+        retornMenuPrincipal();
+      break;
+      }else if(_consoleTextView == "HELP"){
+        help();
+      break;
+      }else  {
+        returnConsoleText("error, comando null!"); //ERRO
+      break;
       }
-    }else if(_consoleTextView == "INPUT" || _consoleTextView == "OUTPUT" || _consoleTextView == "OUTPUT"){
-      pin_mode(_consoleTextView);
-    break;
-    }else if(_consoleTextView == "ON" || _consoleTextView == "OFF"){;
-      pinOnOff(_consoleTextView);
-    break;
-    }else if(_consoleTextView == "END"){
-      retornMenuPrincipal();
-    break;
-    }else if(_consoleTextView == "HELP"){
-      help();
-    break;
-    }else {
-      returnConsoleText("error, comando null!"); //ERRO
-    break;
     }
     contagem++;
-    }
+  }
 contagem = 0;
 }
+//MOSTRA PINOS NA LISTA
+void Console::mostraPinos(){
+  if(pinType[1] != 0) {
+    for (int i = 0; i < ArraySize(pinType); i++) {
+      if(pinType[i] != 0) {
+        messageView(pinType[i]);
+      }
+    }
+ }else{
+  returnConsoleText("Apenas o pino " + pinType[0] + "(default) Cadastrado.");
+ }
+}  
 //MENSAGEM DE TODO O PROGRAMA
 void Console::pin_mode(String _consoleTextView){
   if(bufferArray[0] != NULL){

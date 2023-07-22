@@ -11,6 +11,7 @@ class Console {
         void helloWord(String _consoleTextView  = "Hello Word");
         void consoleView();
         void pinTypeExiste(String _consoleTextView);
+        void mostraPinos();
         //MODO DE OPERAÇÃO DO PINO SELECIONADO
         void pin_mode(String _consoleTextView);
         void pinOnOff(String _consoleTextView);
