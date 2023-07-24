@@ -1,5 +1,5 @@
 
-# Modo de Utiliazção da Biblioteca Arduino IDE
+## Modo de Utilização da Biblioteca Arduino IDE
 
 Essa Biblioteca usa Três Parâmetros.
 
