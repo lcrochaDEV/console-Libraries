@@ -6,8 +6,8 @@
 
 class Console {
     public:
-    //Console(String text);
-        void elementName(String consoleText  = "ARDUINO");
+    Console(String _consoleTextView = "");
+        void elementName(String _consoleTextView  = "ARDUINO");
         void helloWord(String _consoleTextView  = "Hello Word");
         void consoleView();
         void pinTypeExiste(String _consoleTextView);
@@ -25,7 +25,7 @@ class Console {
         void messageView(String _consoleTextView);
         //String push();
     private:
-    //String consoleText;   
+    String consoleTextView;   
 };
  
 #endif

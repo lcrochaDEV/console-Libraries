@@ -21,15 +21,15 @@ int pin_Off = LOW; //PIN STATE BAIXO = 0
 
 int contagem = 0; //CONTADOR
 
-/*
-Console::Console(String text){
-     consoleTextView = text;
+Console::Console(String _consoleTextView){
+     consoleTextView = _consoleTextView;
 }
-*/
-void Console::elementName(String consoleText = "ARDUINO"){
-    promptCLI = consoleText;
+void Console::elementName(String _consoleTextView = "ARDUINO"){
+    consoleTextView = _consoleTextView;
+    promptCLI = _consoleTextView;
 }
 void Console::helloWord(String _consoleTextView = "Hello Word"){
+  consoleTextView = _consoleTextView;
   messageView(_consoleTextView);
   messageView(promptCLI + "> ");
 }
