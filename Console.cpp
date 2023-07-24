@@ -55,7 +55,7 @@ void Console::pinTypeExiste(String _consoleTextView){
       }else if(_consoleTextView == "LISTPIN"){
         mostraPinos();
       break;
-      }else if(_consoleTextView == "INPUT" || _consoleTextView == "OUTPUT" || _consoleTextView == "OUTPUT"){
+      }else if(_consoleTextView == "INPUT" || _consoleTextView == "OUTPUT" || _consoleTextView == "INPUT_PULLUP"){
         pin_mode(_consoleTextView);
       break;
       }else if(_consoleTextView == "ON" || _consoleTextView == "OFF"){;
