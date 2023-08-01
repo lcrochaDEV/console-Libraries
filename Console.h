@@ -6,26 +6,28 @@
 
 class Console {
     public:
-    Console(String _consoleTextView = "");
-        void elementName(String _consoleTextView  = "ARDUINO");
-        void helloWord(String _consoleTextView  = "Hello Word");
-        void consoleView();
-        void pinTypeExiste(String _consoleTextView);
-        void mostraPinos();
-        //MODO DE OPERAÇÃO DO PINO SELECIONADO
-        void pin_mode(String _consoleTextView);
-        void pinOnOff(String _consoleTextView);
-        void activePin();
-        void onOff(String _consoleTextView);
-        void ativo(String onOff, String _consoleTextView);
-        void retornMenuPrincipal();
-        void help();
-        void returnConsoleText(String _consoleTextView);
-        //MENSAGEM DE TODO O PROGRAMA
-        void messageView(String _consoleTextView);
-        //String push();
+    Console(String consoleText = "");
+    void elementName(String consoleText = "ARDUINO");
+    void helloWord(String consoleText  = "Hello Word");
+    void consoleView();
+    void messageViewMsg2();
     private:
-    String consoleTextView;   
+    String consoleTextView;
+
+    void arduinoPins(String consoleText);
+    void subMenuFunction(String consoleText);
+    void analogPins(String consoleText);
+    void mostraPinos();
+    //MODO DE OPERAÇÃO DO PINO SELECIONADO
+    void pin_mode(String consoleText = "");
+    void pinOnOff(String consoleText);
+    void activePin();
+    void ativo(String consoleText);
+    void retornMenuPrincipal();
+    void help();
+    void returnConsoleText(String consoleText);
+    //MENSAGEM DE TODO O PROGRAMA
+    void messageViewMsg1(String consoleText);
 };
  
 #endif

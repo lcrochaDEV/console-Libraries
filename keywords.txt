@@ -1,14 +1,5 @@
 Console KEYWORD1
-consoleView KEYWORD2
+elementName KEYWORD2
 helloWord KEYWORD2
-pinTypeExiste KEYWORD2
-mostraPinos() KEYWORD2
-pin_mode KEYWORD2
-pinOnOff KEYWORD2
-activePin KEYWORD2
-onOff KEYWORD2
-ativo KEYWORD2
-retornMenuPrincipal KEYWORD2
-help KEYWORD2
-returnConsoleText KEYWORD2
-messageView KEYWORD2
+consoleView KEYWORD2
+messageViewMsg2 KEYWORD2
