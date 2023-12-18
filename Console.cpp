@@ -7,6 +7,7 @@
  * Data 12/07/2023
 */
 /************/
+#include "Console.h"
 int contagem = 0; //CONTADOR
 
 //CONTA O TAMANHO DO ARRAY
@@ -200,7 +201,7 @@ void Console::messageViewMsg2(){
   Serial.println(consoleTextView);
 }
 //MENSAGENS E RETORNOS DE ERROS
-Console consoleView;
+/*Console consoleView;
 void setup() {
   delay(100);
   Serial.begin(9600);
@@ -211,8 +212,8 @@ void setup() {
 Console msg("NOVO");
   msg.messageViewMsg2();
 }
-*/
+
 void loop(){
   consoleView.consoleView();
   //digitalWrite(A0, HIGH);
-}
+}*/
