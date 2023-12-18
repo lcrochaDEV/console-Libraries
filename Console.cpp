@@ -23,6 +23,7 @@ int digitalPinArr[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13}; //ARRAY DE
 int analogPinArr[] = {14, 15, 16, 17, 18, 19, 20, 21}; //ARRAY DE PINOS
 String modeOperation[3] = {"INPUT", "OUTPUT", "INPUT_PULLUP"}; //ARRAY DE MODOS
 
+//GENÉRIO
 int arrayIndexOff(String nomeDoModo){
   while(contagem < ArraySize(modeOperation)) {
     if(nomeDoModo == modeOperation[contagem]){
@@ -59,34 +60,25 @@ void Console::consoleView(){
 void Console::arduinoPins(String consoleText){
   if(consoleText.startsWith("D") && consoleText.length() <= 3) {
     bufferArray[arrayIndexOff(consoleText)] = ""; //ZERANDO ARRAY
-    while(contagem < ArraySize(digitalPinArr)) {
-      if(consoleText.substring(1).equals(String(digitalPinArr[contagem]))){ //VERIFICA SE EXISTE NO ARRAY
+      if(consoleText.substring(1).equals(String(digitalPinArr[consoleText.substring(1).toInt()]))){ //VERIFICA SE EXISTE NO ARRAY
         bufferArray[0] = consoleText; //OBRIGATÓRIO
-        bufferArray[1] = digitalPinArr[contagem]; //OBRIGATÓRIO
+        bufferArray[1] = digitalPinArr[consoleText.substring(1).toInt()]; //OBRIGATÓRIO
         pin_mode();
-      break;
-      }else if(consoleText.substring(1).endsWith(String(digitalPinArr[contagem]))){
+      }else {
         returnConsoleText("Pino não encontrado!");
-      break;
       }
-    contagem++;
-    }
-    contagem = 0;
   } else if(consoleText.startsWith("A") && consoleText.length() <= 3) {
     bufferArray[arrayIndexOff(consoleText)] = ""; //ZERANDO ARRAY
-    while(contagem < ArraySize(analogPinArr)) {
-      if(consoleText.substring(1) + String(ArraySize(digitalPinArr)).equals(String(analogPinArr[contagem]))){ //VERIFICA SE EXISTE NO ARRAY
-        bufferArray[0] = consoleText; //OBRIGATÓRIO
-        bufferArray[1] = analogPinArr[contagem];
-        pin_mode();
-      break;
-     }else if(consoleText.substring(1).endsWith(String(analogPinArr[contagem]))){
-        returnConsoleText("Pino não encontrado!");
+      while(sizeof(analogPinArr)/sizeof(analogPinArr[0])) {
+        if(analogPinArr[consoleText.substring(1).toInt()]){ //VERIFICA SE EXISTE NO ARRAY
+          bufferArray[0] = consoleText; //OBRIGATÓRIO
+          bufferArray[1] = analogPinArr[consoleText.substring(1).toInt()];
+          pin_mode();
+        }else {
+          returnConsoleText("Pino não encontrado!");
+        }
       break;
       }
-    contagem++;
-    }
-    contagem = 0;
   }else {
     subMenuFunction(consoleText);
   }
@@ -173,7 +165,7 @@ void Console::retornMenuPrincipal(){
 }
 void Console::help(){
   messageViewMsg1("/**PINOS ARDUINO NANO**/");
-  messageViewMsg1("Portas Analogicas A = 1,2,3,4,5,6,7.");
+  messageViewMsg1("Portas Analogicas A = 0, 1 ,2 ,3 , 4, 5, 6, 7.");
   messageViewMsg1("Portas Analogicas/Digitais 14, 15, 16, 17, 18, 19, 20.");
   messageViewMsg1("Portas Digitais D = 2,3,4,5PWM,6PWM,7,8,9PWM,10PWM,11PWM,12,13.");
   messageViewMsg1("Data 12/07/2023");
@@ -185,6 +177,7 @@ void Console::returnConsoleText(String consoleText){
     messageViewMsg1(consoleText);
     messageViewMsg1(promptCLI + "> ");
   }else if(bufferArray[3] == NULL){
+    messageViewMsg1("Comando não encontrado!");
     messageViewMsg1("Escolha um Modo de Operação");
     messageViewMsg1("INPUT, OUTPUT ou INPUT_PULLUP");
     messageViewMsg1(promptCLI + "-" + bufferArray[0] + ">");
@@ -200,20 +193,3 @@ void Console::messageViewMsg1(String consoleText){
 void Console::messageViewMsg2(){
   Serial.println(consoleTextView);
 }
-//MENSAGENS E RETORNOS DE ERROS
-/*Console consoleView;
-void setup() {
-  delay(100);
-  Serial.begin(9600);
-  consoleView.elementName("ESP-NOW");
-  consoleView.helloWord("O Modulo Iniciou com Sucesso...");
-}
-/*
-Console msg("NOVO");
-  msg.messageViewMsg2();
-}
-
-void loop(){
-  consoleView.consoleView();
-  //digitalWrite(A0, HIGH);
-}*/
