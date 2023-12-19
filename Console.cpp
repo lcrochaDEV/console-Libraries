@@ -1,3 +1,4 @@
+#include "HardwareSerial.h"
 /*LUCAS ROCHA*/
 /*
  * Portas Analogicas A = 1,2,3,4,5,6,7.
@@ -59,16 +60,22 @@ void Console::consoleView(){
 //MENU PINOS DIGITAIS
 void Console::arduinoPins(String consoleText){
   if(consoleText.startsWith("D") && consoleText.length() <= 3) {
-    bufferArray[arrayIndexOff(consoleText)] = ""; //ZERANDO ARRAY
-      if(consoleText.substring(1).equals(String(digitalPinArr[consoleText.substring(1).toInt()]))){ //VERIFICA SE EXISTE NO ARRAY
-        bufferArray[0] = consoleText; //OBRIGATÓRIO
-        bufferArray[1] = digitalPinArr[consoleText.substring(1).toInt()]; //OBRIGATÓRIO
-        pin_mode();
-      }else {
-        returnConsoleText("Pino não encontrado!");
-      }
+    //ZERANDO ARRAY BUFFER
+    for (int i = 0; i <= arrayIndexOff(bufferArray[0]); i++) {
+      bufferArray[i] = ""; 
+    }
+    if(consoleText.substring(1).equals(String(digitalPinArr[consoleText.substring(1).toInt()]))){ //VERIFICA SE EXISTE NO ARRAY
+      bufferArray[0] = consoleText; //OBRIGATÓRIO
+      bufferArray[1] = digitalPinArr[consoleText.substring(1).toInt()]; //OBRIGATÓRIO
+      pin_mode();
+    }else {
+      returnConsoleText("Pino não encontrado!");
+    }
   } else if(consoleText.startsWith("A") && consoleText.length() <= 3) {
-    bufferArray[arrayIndexOff(consoleText)] = ""; //ZERANDO ARRAY
+      //ZERANDO ARRAY BUFFER
+      for (int i = 0; i <= arrayIndexOff(bufferArray[0]); i++) {
+        bufferArray[i] = ""; 
+      }
       while(sizeof(analogPinArr)/sizeof(analogPinArr[0])) {
         if(analogPinArr[consoleText.substring(1).toInt()]){ //VERIFICA SE EXISTE NO ARRAY
           bufferArray[0] = consoleText; //OBRIGATÓRIO
@@ -86,7 +93,7 @@ void Console::arduinoPins(String consoleText){
 //SUB-MENU
 void Console::subMenuFunction(String consoleText){
   if(consoleText == "LISTPIN"){
-   // mostraPinos();
+      mostraPinos();
   }else if(consoleText == "INPUT" || consoleText == "OUTPUT" || consoleText == "INPUT_PULLUP"){
       pin_mode(consoleText);
   }else if(consoleText == "ON" || consoleText == "OFF"){
@@ -104,14 +111,14 @@ void Console::analogPins(String consoleText){
 }
 //MOSTRA PINOS NA LISTA
 void Console::mostraPinos(){
-  if(digitalPinArr[1] != 0) {
-    for (int i = 0; i < ArraySize(digitalPinArr); i++) {
-      if(digitalPinArr[i] != 0) {
-        messageViewMsg1(String(digitalPinArr[i]));
-      }
-    }
+  if(bufferArray[1] != 0) {
+    messageViewMsg1("Pino: " + String(bufferArray[0]));
+    messageViewMsg1("Número do Pino: " + String(bufferArray[1]));
+    String operacaoMode = bufferArray[2] == "0"  ? "INPUT" : NULL || bufferArray[2] == "1" ? "OUTPUT" : NULL || bufferArray[2] == "2" ? "INPUT_PULLUP" : NULL;
+    messageViewMsg1("Modo de Operação: " + operacaoMode);
+    messageViewMsg1("Estado: " + String(bufferArray[3]));
  }else{
-  returnConsoleText("Apenas o pino " + String(digitalPinArr[0]) + "(default) Cadastrado.");
+  returnConsoleText("Pino não Cadastrado.");
  }
 }//SEM FUNCIONALIDADE NO MOMENTO
 //MENSAGEM DE TODO O PROGRAMA
@@ -119,7 +126,6 @@ void Console::pin_mode(String consoleText = ""){
  if(consoleText != NULL) {
     if(bufferArray[0] != NULL){
       bufferArray[2] = arrayIndexOff(consoleText);
-      pinMode(bufferArray[1].toInt(), bufferArray[2].toInt());
       messageViewMsg1("Modo de Operação " + consoleText + " Acionado!");
       messageViewMsg1(promptCLI + "-" + bufferArray[0] + ">");
     }else{
@@ -132,7 +138,7 @@ void Console::pin_mode(String consoleText = ""){
   }
 }
 void Console::pinOnOff(String consoleText){
-  if(bufferArray[0] != NULL){
+  if(bufferArray[2] != NULL){
     bufferArray[3] = consoleText;
     activePin();
   }else if(!bufferArray[0]){
